@@ -1,0 +1,12 @@
+NOTICE
+
+mpc-crypto-lib
+Copyright 2024 Tamarin Health.
+
+## Included Third-Party Library:
+
+Library Name: hpke-js
+License: MIT License
+Copyright (c) 2022 Ajitomi Daisuke
+Source: https://github.com/dajiaji/hpke-js
+License Text Link: https://opensource.org/license/mit/
