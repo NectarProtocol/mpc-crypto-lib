@@ -205,12 +205,12 @@ export async function hybridDecrypt(
 }
 
 /**
- * Encrypts a row of data using secret sharing and HPKE encryption.
+ * Secret shares a row of data and then encrypts it with HPKE.
  * @param row - The row of data to be encrypted.
  * @param publicKeys - An array of public keys corresponding to each party.
  * @returns A serialized JSON string representing the encrypted data.
  */
-export async function encrypt(
+export async function secretShareAndEncrypt(
   row: Record<string, bigint>,
   publicKeys: string[]
 ): Promise<string> {

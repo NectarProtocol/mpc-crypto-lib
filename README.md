@@ -25,7 +25,7 @@ npm test
 ```js
 import {
   toBigIntRow,
-  encrypt,
+  secretShareAndEncrypt,
   generateKeyPair,
   decryptOneParty,
   defaultPrime,
@@ -45,7 +45,10 @@ async function demo() {
   const mpcRow = await toBigIntRow(orignalRow);
 
   // Encrypt row with MPC public keys
-  const cipher = await encrypt(mpcRow, [kp1.publicKey, kp2.publicKey]);
+  const cipher = await secretShareAndEncrypt(mpcRow, [
+    kp1.publicKey,
+    kp2.publicKey,
+  ]);
 
   // MPC 1 decrypt its secret shares
   const row1 = await decryptOneParty(cipher, kp1.privateKey, kp1.publicKey);

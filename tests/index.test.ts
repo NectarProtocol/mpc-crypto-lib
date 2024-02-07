@@ -23,7 +23,7 @@ import {
   generateKeyPair,
   hybridEncrypt,
   hybridDecrypt,
-  encrypt,
+  secretShareAndEncrypt,
   decryptOneParty,
   toBigIntRow,
 } from "../src/index";
@@ -65,7 +65,7 @@ test("should encrypt and decrypt a row", async () => {
   const keyPair1 = await generateKeyPair();
   const keyPair2 = await generateKeyPair();
   const orignalRow = { a: BigInt(10), b: BigInt(-20) };
-  const cipher = await encrypt(orignalRow, [
+  const cipher = await secretShareAndEncrypt(orignalRow, [
     keyPair1.publicKey,
     keyPair2.publicKey,
   ]);
@@ -87,5 +87,5 @@ test("should correctly transform the input row", async () => {
   const keyPair = await generateKeyPair();
   const orignalRow = { a: "abc", b: true, c: 123 };
   const mpcRow = await toBigIntRow(orignalRow);
-  await expect(encrypt(mpcRow, [keyPair.publicKey])).resolves.not.toThrow();
+  await expect(secretShareAndEncrypt(mpcRow, [keyPair.publicKey])).resolves.not.toThrow();
 });
