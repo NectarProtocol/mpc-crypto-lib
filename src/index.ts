@@ -36,13 +36,18 @@ export type HybridCipher = {
 export const defaultPrime = BigInt("170141183460469231731687303715885907969");
 
 /**
- * Generates a random BigInt within [ 0, 2^64 - 1 ]
+ * Generates a random BigInt within [ 0, defaultPrime ~ 2^128 - 1 ]
  * @returns A BigInt value.
  */
 export function randomBigInt(): bigint {
-  const array = new Uint32Array(2);
+  const array = new Uint32Array(4);
   crypto.getRandomValues(array);
-  return (BigInt(array[0]) << BigInt(32)) + BigInt(array[1]);
+  let n = BigInt(array[0]);
+  for (let i = 1; i < 4; i++) {
+    n = n << BigInt(32);
+    n += BigInt(array[i]);
+  }
+  return n % defaultPrime;
 }
 
 /**

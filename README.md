@@ -39,7 +39,7 @@ async function demo() {
   const kp2 = await generateKeyPair();
 
   // Input data
-  const orignalRow = { a: "abc", b: true, c: 123 };
+  const orignalRow = { a: "abc", b: true, c: 12.3 };
 
   // Convert cells to BigInt
   const mpcRow = await toBigIntRow(orignalRow);
