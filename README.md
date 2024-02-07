@@ -4,7 +4,7 @@ This library provides data encryption functionalities for multi-party computatio
 
 This Typescript module works in both web browsers and Node.js.
 
-## Setup
+## Run Tests
 
 ```sh
 npm install
@@ -12,7 +12,13 @@ npm run build
 npm test
 ```
 
-## Cell types
+## Install
+
+```sh
+npm i mpc-crypto-lib
+```
+
+## Cell Types
 
 | Type      | Supported | Description                                                                                                                           |
 | --------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------- |
@@ -29,7 +35,7 @@ import {
   generateKeyPair,
   decryptOneParty,
   defaultPrime,
-} from "./index";
+} from "mpc-crypto-lib";
 
 async function demo() {
   // Generate key pair for MPC node 1
