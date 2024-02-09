@@ -1,12 +1,20 @@
 {
   "name": "mpc-crypto-lib",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "This module provides data encryption functionalities for multi-party computation.",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "./dist/src/index.js",
+  "module": "./dist/src/index.mjs",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.mjs",
+      "default": "./dist/src/index.js"
+    }
+  },
   "scripts": {
-    "build": "tsc",
-    "test": "jest --testPathPattern=dist"
+    "lint": "tsc",
+    "test": "jest --testPathPattern=dist",
+    "build": "tsup **/*.ts --format cjs,esm --dts"
   },
   "keywords": [
     "multi-party computation",
@@ -24,6 +32,7 @@
     "@types/jest": "^29.5.11",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
+    "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   },
   "dependencies": {

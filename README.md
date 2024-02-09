@@ -56,10 +56,10 @@ async function demo() {
     kp2.publicKey,
   ]);
 
-  // MPC 1 decrypt its secret shares
+  // MPC node 1 decrypt its secret shares
   const row1 = await decryptOneParty(cipher, kp1.privateKey, kp1.publicKey);
 
-  // MPC 2 decrypt its secret shares
+  // MPC node 2 decrypt its secret shares
   const row2 = await decryptOneParty(cipher, kp2.privateKey, kp2.publicKey);
 
   console.log((row1.a + row2.a) % defaultPrime === mpcRow.a); // true
