@@ -1,6 +1,6 @@
 # mpc-crypto-lib
 
-This library provides data encryption functionalities for multi-party computation (MPC). Its primary purpose is to input a row of data, perform arithmetic secret sharing, and then hybrid encrypt the shares of each node with their respective public keys. Finally, all the encrypted shares are outputted as a single-string cipher.
+This library provides data encryption functionalities for multi-party computation (MPC). Its primary purpose is to input a row of data, perform arithmetic secret sharing, and then hybrid encrypt (RFC-9180) the shares of each node with their respective public keys. Finally, all the encrypted shares are outputted as a single-string cipher.
 
 This Typescript module works in both web browsers and Node.js.
 
@@ -56,10 +56,10 @@ async function demo() {
     kp2.publicKey,
   ]);
 
-  // MPC node 1 decrypt its secret shares
+  // MPC node 1 decrypts its secret shares
   const row1 = await decryptOneParty(cipher, kp1.privateKey, kp1.publicKey);
 
-  // MPC node 2 decrypt its secret shares
+  // MPC node 2 decrypts its secret shares
   const row2 = await decryptOneParty(cipher, kp2.privateKey, kp2.publicKey);
 
   console.log((row1.a + row2.a) % defaultPrime === mpcRow.a); // true
@@ -67,3 +67,7 @@ async function demo() {
 
 demo();
 ```
+
+## Acknowledgment
+
+This project was supported by the National Science Foundation under grant #2026461.
