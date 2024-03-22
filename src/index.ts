@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-import * as crypto from "crypto";
 import { AeadId, CipherSuite, KdfId, KemId } from "hpke-js";
+import * as Crypto from "crypto";
+
+const cryptoApi = crypto ?? Crypto.webcrypto;
 
 const hpkeSuite = new CipherSuite({
   kem: KemId.DhkemP256HkdfSha256,
@@ -42,7 +44,7 @@ export const defaultPrime = BigInt("170141183460469231731687303715885907969");
  */
 export function randomBigInt(): bigint {
   const array = new Uint32Array(4);
-  crypto.getRandomValues(array);
+  cryptoApi.getRandomValues(array);
   let n = BigInt(array[0]);
   for (let i = 1; i < 4; i++) {
     n = n << BigInt(32);
@@ -281,7 +283,7 @@ export async function decryptOneParty(
 export async function stringToHash(message: string): Promise<bigint> {
   const encoder = new TextEncoder();
   const data = encoder.encode(message);
-  const buffer = await crypto.subtle.digest("SHA-256", data);
+  const buffer = await cryptoApi.subtle.digest("SHA-256", data);
   const bytes = new Uint8Array(buffer).slice(0, 8);
   const hex = `0x${bytesToHex(bytes)}`;
   return BigInt(hex); // Range: [ 0, 2^64 - 1 ]

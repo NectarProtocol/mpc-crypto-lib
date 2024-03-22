@@ -1,6 +1,6 @@
 {
   "name": "mpc-crypto-lib",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "This module provides data encryption functionalities for multi-party computation.",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.mjs",
