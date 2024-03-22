@@ -15,9 +15,9 @@
  */
 
 import { AeadId, CipherSuite, KdfId, KemId } from "hpke-js";
-import * as Crypto from "crypto";
+import { webcrypto } from "crypto";
 
-const cryptoApi = crypto ?? Crypto.webcrypto;
+const cryptoApi: any = typeof crypto !== "undefined" ? crypto : webcrypto;
 
 const hpkeSuite = new CipherSuite({
   kem: KemId.DhkemP256HkdfSha256,
