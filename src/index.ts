@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import * as crypto from "crypto";
 import { AeadId, CipherSuite, KdfId, KemId } from "hpke-js";
 
 const hpkeSuite = new CipherSuite({
