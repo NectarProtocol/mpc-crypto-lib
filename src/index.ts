@@ -64,7 +64,10 @@ export function secretShare(value: bigint, n: number): bigint[] {
   if (!Number.isSafeInteger(n) || n < 1) {
     throw Error("Incorrect party number");
   }
-  if (value >= defaultPrime || -value >= defaultPrime) {
+  if (
+    value > (defaultPrime - BigInt(1)) / BigInt(2) ||
+    -value > (defaultPrime - BigInt(1)) / BigInt(2)
+  ) {
     throw Error("Value too large for modulus");
   }
   const sx: bigint[] = [];
@@ -74,7 +77,7 @@ export function secretShare(value: bigint, n: number): bigint[] {
   const sumSx = sx.reduce((acc, val) => acc + val, BigInt(0));
   sx.push((value - sumSx) % defaultPrime);
   const finalSumSx = sx.reduce((acc, val) => acc + val, BigInt(0));
-  if (finalSumSx % defaultPrime !== value) {
+  if ((finalSumSx - value) % defaultPrime !== BigInt(0)) {
     throw Error("Arithmetic secret sharing failed");
   }
   return sx;
@@ -188,20 +191,20 @@ export async function hybridEncrypt(
 
 /**
  * Decrypts a message (e.g., a secret shared row) using HPKE hybrid decryption.
- * @param secret - The HybridCipher object containing the ciphertext and encapsulated key.
+ * @param hybridCipher - The HybridCipher object containing the ciphertext and encapsulated key.
  * @param privateKey - The recipient's private key in hexadecimal string format.
  * @returns The decrypted message as a string.
  */
 export async function hybridDecrypt(
-  secret: HybridCipher,
+  hybridCipher: HybridCipher,
   privateKey: string
 ): Promise<string> {
   const key = await parsePrivateKey(privateKey);
   const recipient = await hpkeSuite.createRecipientContext({
     recipientKey: key,
-    enc: hexToBytes(secret.encapsulatedKey),
+    enc: hexToBytes(hybridCipher.encapsulatedKey),
   });
-  const cipherBytes = hexToBytes(secret.cipher);
+  const cipherBytes = hexToBytes(hybridCipher.cipher);
   const valueBuffer = await recipient.open(cipherBytes);
   const textDecoder = new TextDecoder();
   return textDecoder.decode(valueBuffer);
